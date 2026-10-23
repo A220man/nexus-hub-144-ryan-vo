@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "name": "nexus-hub-144-ryan-vo",
+  "owner": "A220man",
+  "email": "ryandtvo@gmail.com",
+  "domain": "AI/ML developer tools",
+  "workflows": [
+    "AI-powered semantic job search with match scoring and explanations",
+    "Dictionary coverage checker for skills, roles, and industries",
+    "Candidate profile management with unified autosave"
+  ],
+  "auth": "oidc-keycloak-saml-broker",
+  "llm_providers": [
+    "openai-compatible",
+    "anthropic",
+    "gemini",
+    "ollama"
+  ],
+  "summary": "Work in progress: nexus-hub-144-ryan-vo",
+  "status": "work-in-progress"
+}

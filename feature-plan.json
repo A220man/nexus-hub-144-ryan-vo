@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "current_feature": "core-search",
+  "features": [
+    {
+      "id": "core-search",
+      "title": "Core job search with AI-powered semantic matching",
+      "status": "done",
+      "acceptance": [
+        "Backend serves /api/search endpoint accepting query, location, filters",
+        "Frontend search page renders results with pagination",
+        "Semantic matching uses sentence-transformers for query-job embedding similarity",
+        "Results include AI match score and explanation"
+      ],
+      "implementation": [
+        "backend/app/main.py",
+        "backend/app/api/search.py",
+        "backend/app/services/semantic_search.py",
+        "backend/app/models/job.py",
+        "frontend/src/pages/Search.tsx",
+        "frontend/src/components/JobCard.tsx",
+        "frontend/src/api/client.ts"
+      ],
+      "tests": [
+        "backend/tests/test_search.py",
+        "frontend/src/components/__tests__/JobCard.test.tsx"
+      ]
+    },
+    {
+      "id": "dictionary-coverage",
+      "title": "Dictionary coverage checker for skills/roles/industries",
+      "status": "planned",
+      "acceptance": [
+        "Public /dictionary page with search input",
+        "Three result types: canonical hit, alias hit, miss",
+        "Misses recorded with deduplication counter for admin review"
+      ],
+      "implementation": [],
+      "tests": []
+    },
+    {
+      "id": "profile-redesign",
+      "title": "Redesigned candidate profile page (single-page, autosave)",
+      "status": "planned",
+      "acceptance": [
+        "Single scrolling page replaces 8 tabs",
+        "Unified autosave across all sections",
+        "Profile completeness indicator at top"
+      ],
+      "implementation": [],
+      "tests": []
+    },
+    {
+      "id": "anonymous-tracking",
+      "title": "Anonymous application process sharing with k-anonymity",
+      "status": "planned",
+      "acceptance": [
+        "Opt-in per-job sharing toggle",
+        "Aggregates shown only when k>=5",
+        "Stage timing and outcome distributions displayed"
+      ],
+      "implementation": [],
+      "tests": []
+    }
+  ]
+}
