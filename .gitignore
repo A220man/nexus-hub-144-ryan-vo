@@ -1,0 +1,45 @@
+# Nexus Hub .gitignore
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+.env
+*.db
+*.sqlite
+
+# Node
+node_modules/
+dist/
+build/
+.env
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Test/coverage
+.pytest_cache/
+.coverage
+htmlcov/
+coverage/
+
+# Build artifacts
+*.egg-info/
+dist/
+build/
+
+# Local agent metadata
+.antigravitycli/
+.omp/
+
+# Logs
+*.log
