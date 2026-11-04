@@ -1,8 +1,15 @@
 # Changelog
 
-## 1.1.0 — work-in-progress checkpoint
+## 1.2.0 — work-in-progress checkpoint
 
 Partial code published for continued development. Known issues: STATUS.md.
+
+## 1.1.0 — work-in-progress checkpoint
+
+### Fixed
+- Fixed `datetime.utcnow()` deprecation warnings in SQLAlchemy model defaults and API code
+- Updated to use timezone-aware `datetime.now(timezone.utc)` with lambda callables
+- All backend tests pass without deprecation warnings
 
 ## 1.0.0 — work-in-progress checkpoint
 
@@ -42,3 +49,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - No authentication (demo mode)
 - SQLite file-based storage
 - No rate limiting
+
