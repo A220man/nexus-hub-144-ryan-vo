@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, Query, HTTPException
 from sqlalchemy.orm import Session
 from typing import List, Optional, Dict, Any
 import numpy as np
+from datetime import datetime, timezone
 
 from app.core.database import get_db
 from app.models.job import Job, SearchQuery, DictionaryCoverageRequest
@@ -137,7 +138,7 @@ def submit_dictionary_request(request: DictionarySubmitRequest, db: Session = De
 
     if existing:
         existing.request_count += 1
-        existing.last_requested_at = __import__("datetime").datetime.utcnow()
+        existing.last_requested_at = datetime.now(timezone.utc)
         db.commit()
         return {"status": "updated", "request_count": existing.request_count, "id": existing.id}
 

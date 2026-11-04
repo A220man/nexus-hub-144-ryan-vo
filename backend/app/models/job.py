@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, Text, Float, DateTime, JSON, Index
 from sqlalchemy.dialects.sqlite import JSON as SQLiteJSON
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Optional, List, Dict, Any
 
 from app.core.database import Base
@@ -18,7 +18,7 @@ class Job(Base):
     url = Column(String(1000), nullable=False)
     source = Column(String(100), nullable=False)
     posted_at = Column(DateTime, nullable=True)
-    fetched_at = Column(DateTime, default=datetime.utcnow)
+    fetched_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
     embedding = Column(SQLiteJSON, nullable=True)  # Stored as list[float]
     skills = Column(SQLiteJSON, nullable=True)  # List[str]
     seniority = Column(String(50), nullable=True)
@@ -61,7 +61,7 @@ class SearchQuery(Base):
     location = Column(String(255), nullable=True)
     filters = Column(SQLiteJSON, nullable=True)
     results_count = Column(Integer, default=0)
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
     user_id = Column(String(100), nullable=True)  # For future auth integration
 
 
@@ -73,8 +73,8 @@ class DictionaryCoverageRequest(Base):
     raw_term = Column(String(500), nullable=False)
     normalized_term = Column(String(500), nullable=False, index=True)
     request_count = Column(Integer, default=1)
-    first_requested_at = Column(DateTime, default=datetime.utcnow)
-    last_requested_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    first_requested_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+    last_requested_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
     submitted_by = Column(String(100), nullable=True)
     status = Column(String(20), default="pending")  # pending, accepted, rejected
     resolution_note = Column(Text, nullable=True)
