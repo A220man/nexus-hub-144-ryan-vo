@@ -1,10 +1,19 @@
+
 from pydantic_settings import BaseSettings
 from typing import Optional
+from pathlib import Path
+
+
+def get_version() -> str:
+    version_file = Path(__file__).parent.parent.parent.parent / "VERSION"
+    if version_file.exists():
+        return version_file.read_text().strip()
+    return "1.0.0"
 
 
 class Settings(BaseSettings):
     app_name: str = "nexus-hub"
-    app_version: str = "1.0.0"
+    app_version: str = get_version()
     database_url: str = "sqlite:///./nexus.db"
     embedding_model: str = "all-MiniLM-L6-v2"
     llm_api_key: Optional[str] = None
