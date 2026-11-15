@@ -3,14 +3,13 @@ from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 import logging
 
-from app.core.config import settings
-from app.core.database import engine, Base
-from app.api import search, health, jobs
-from app.models import job  # noqa: F401
+from backend.app.core.config import settings
+from backend.app.core.database import engine, Base
+from backend.app.api import search, health, jobs
+from backend.app.models import job
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
-
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -19,7 +18,6 @@ async def lifespan(app: FastAPI):
     logger.info("Database tables created")
     yield
     logger.info("Shutting down")
-
 
 app = FastAPI(
     title=settings.app_name,
@@ -39,11 +37,9 @@ app.include_router(search.router)
 app.include_router(health.router)
 app.include_router(jobs.router)
 
-
 @app.get("/health")
 def health_check():
     return {"status": "healthy", "version": settings.app_version}
-
 
 @app.get("/")
 def root():
