@@ -2,7 +2,7 @@ import pytest
 import numpy as np
 from fastapi.testclient import TestClient
 
-from app.main import app
+from backend.app.main import app
 from app.core.database import SessionLocal, engine, Base
 from app.models.job import Job, SearchQuery, DictionaryCoverageRequest
 from app.services.semantic_search import SemanticSearchService, DictionaryService
