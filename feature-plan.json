@@ -29,14 +29,18 @@
     {
       "id": "dictionary-coverage",
       "title": "Dictionary coverage checker for skills/roles/industries",
-      "status": "planned",
+      "status": "in_progress",
       "acceptance": [
         "Public /dictionary page with search input",
         "Three result types: canonical hit, alias hit, miss",
         "Misses recorded with deduplication counter for admin review"
       ],
-      "implementation": [],
-      "tests": []
+      "implementation": [
+        "backend/app/services/semantic_search.py - DictionaryService.check_coverage() with miss recording and deduplication"
+      ],
+      "tests": [
+        "backend/tests/test_search.py - TestDictionaryService tests for canonical, alias, miss"
+      ]
     },
     {
       "id": "profile-redesign",
