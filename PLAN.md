@@ -24,12 +24,16 @@ Tests: `backend/tests/test_search.py`, `frontend/src/components/__tests__/JobCar
 
 ### dictionary-coverage — Dictionary coverage checker for skills/roles/industries
 
-Status: planned
+Status: in_progress
 
 Acceptance:
 - Public /dictionary page with search input
 - Three result types: canonical hit, alias hit, miss
 - Misses recorded with deduplication counter for admin review
+
+Implementation: `backend/app/services/semantic_search.py - DictionaryService.check_coverage() with miss recording and deduplication`
+
+Tests: `backend/tests/test_search.py - TestDictionaryService tests for canonical, alias, miss`
 
 ### profile-redesign — Redesigned candidate profile page (single-page, autosave)
 

@@ -1,5 +1,6 @@
 import json
 import numpy as np
+from datetime import datetime, timezone
 from typing import List, Optional, Tuple, Dict, Any
 from sentence_transformers import SentenceTransformer
 import logging
@@ -154,9 +155,10 @@ class DictionaryService:
         return aliases.get(term, term)
 
     @classmethod
-    def check_coverage(cls, term: str, kind: str) -> Dict[str, Any]:
+    def check_coverage(cls, term: str, kind: str, db: Optional[Any] = None) -> Dict[str, Any]:
         """Check if a term exists in the dictionary.
         Returns: {"type": "canonical"|"alias"|"miss", "canonical": str, "display": str}
+        Also records misses in the database with deduplication counting.
         """
         normalized = cls.normalize_term(term, kind)
 
@@ -182,9 +184,40 @@ class DictionaryService:
                 "display": normalized,
             }
 
-        # Miss
+        # Miss — record in database with deduplication
+        from app.core.database import SessionLocal
+
+        request_count = 1
+        if db is not None:
+            try:
+                from app.models.job import DictionaryCoverageRequest
+                existing = (
+                    db.query(DictionaryCoverageRequest)
+                    .filter(
+                        DictionaryCoverageRequest.raw_term == term,
+                        DictionaryCoverageRequest.kind == kind,
+                    )
+                    .first()
+                )
+                if existing:
+                    existing.request_count += 1
+                    existing.last_requested_at = datetime.now(timezone.utc)
+                    request_count = existing.request_count
+                    db.add(existing)
+                else:
+                    entry = DictionaryCoverageRequest(
+                        kind=kind,
+                        raw_term=term,
+                        normalized_term=normalized,
+                        request_count=1,
+                    )
+                    db.add(entry)
+                db.commit()
+            except Exception:
+                db.rollback()
         return {
             "type": "miss",
             "canonical": None,
             "display": None,
+            "recorded": True,
         }
